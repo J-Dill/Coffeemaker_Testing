@@ -1,7 +1,8 @@
+import org.apache.commons.lang3.StringUtils;
 
 public class Output {
 	private String message = "";
-	private Room room;
+	private Room room = new Room();
 	private String instructions = "";
 	
 	public Output() {}
@@ -36,5 +37,15 @@ public class Output {
 		if (!instructions.isEmpty())
 			outputString += instructions + "\n";
 		return outputString;
+	}
+
+	public boolean isEqual(Output output) {
+		if (!StringUtils.equals(message, output.getMessage()))
+			return false;
+		else if (!room.isEqual(output.getRoom()))
+			return false;
+		else if (!StringUtils.equals(instructions, output.getInstructions()))
+			return false;
+		return true;
 	}
 }

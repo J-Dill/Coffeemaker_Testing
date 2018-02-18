@@ -9,10 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 
 public class TestBase {
 	
@@ -20,11 +17,16 @@ public class TestBase {
     private static BufferedReader consoleOut;
     private static BufferedWriter consoleIn;
     
-    private String description;
-    private String preConditions;
-    private String executionSteps;
-    private String postConditions;
-    private static Output initialOutput;
+    @SuppressWarnings("unused")
+	private String description;
+    @SuppressWarnings("unused")
+	private String preConditions;
+    @SuppressWarnings("unused")
+	private String executionSteps;
+    @SuppressWarnings("unused")
+	private String postConditions;
+    @SuppressWarnings("unused")
+	private static Output initialOutput;
     
     protected void scenario(String desc) {
     	description = desc;
@@ -150,7 +152,7 @@ public class TestBase {
 			String adjective = m.group(2);
 			String furnishing = m.group(3);
 			furn.setAdjective(adjective);
-			furn.setFurnishing(furnishing);
+			furn.setFurniture(furnishing);
 		}
 		return furn;
 	}

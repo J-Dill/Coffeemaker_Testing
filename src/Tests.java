@@ -1,5 +1,4 @@
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
@@ -10,7 +9,7 @@ public class Tests extends TestBase {
 
 	@Test
 	public void test1() {
-		scenario("The system should recognize every known command, like 'N'.");
+		scenario("The system should recognize every known command, like 'L'.");
 		given("The user has just started the game.");
 		then("The user enters 'N'.");
 		andThen("The user should be taken to the North room.");
@@ -29,4 +28,6 @@ public class Tests extends TestBase {
 			e.printStackTrace();
 		}
 	}
+	
+
 }

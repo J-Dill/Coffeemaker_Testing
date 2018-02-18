@@ -1,3 +1,4 @@
+import org.apache.commons.lang3.StringUtils;
 
 public class Door {
 	private String direction = "";
@@ -28,5 +29,13 @@ public class Door {
 		if (direction.isEmpty() && adjective.isEmpty())
 			return true;
 		return false;
+	}
+	
+	public boolean isEqual(Door door) {
+		if (!StringUtils.equals(direction, door.getDirection()))
+			return false;
+		else if (StringUtils.equals(adjective, door.getAdjective()))
+			return false;
+		return true;
 	}
 }

@@ -1,11 +1,12 @@
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
 public class Room {
-	private String adjective;
-	private Furnishing furnishing;
-	private List<Door> doors;
+	private String adjective = "";
+	private Furnishing furnishing = new Furnishing();
+	private List<Door> doors = new ArrayList<Door>();
 	
 	public String getAdjective() {
 		return adjective;
@@ -38,9 +39,20 @@ public class Room {
 
 		return outputString;
 	}
+	
 	public boolean isEmpty() {
 		if (adjective.isEmpty() && furnishing.isEmpty() && doors.isEmpty())
 			return true;
 		return false;
+	}
+	
+	public boolean isEqual(Room room) {
+		if(!StringUtils.equals(adjective, room.getAdjective()))
+			return false;
+		else if (!furnishing.isEqual(room.getFurnishing()))
+			return false;
+		else if (!doors.equals(room.getDoors()))
+			return false;
+		return true;
 	}
 }
