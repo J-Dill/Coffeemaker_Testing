@@ -1,4 +1,4 @@
-package data;
+package tests;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -12,7 +12,22 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 
+import data.Door;
+import data.Furnishing;
+import data.Output;
+import data.Room;
+
 public class TestBase {
+	
+	@SuppressWarnings("serial")
+	static class GameException extends RuntimeException {
+		public GameException() {
+			super(); 
+		}
+		public GameException(String message) {
+			super(message); 
+		}
+	}
 	
     protected static Process io;
     private static BufferedReader consoleOut;
@@ -52,19 +67,28 @@ public class TestBase {
 			io = Runtime.getRuntime().exec("cmd /c java -jar " + dir);
 	    	consoleOut = new BufferedReader(new InputStreamReader(io.getInputStream()));
 	    	consoleIn = new BufferedWriter(new OutputStreamWriter(io.getOutputStream()));
-	    	initialOutput = enter(null); //This starts up the game and sends its initial output into the variable
+	    	initialOutput = enter(null, true); //This starts up the game and sends its initial output into the variable
 		} catch(IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
     }
 	
-	protected static Output enter(String words, boolean print) throws IOException, InterruptedException {
-		if(words != null) {
-			consoleIn.write(words);
+	protected static Output enter(String input, boolean print) throws IOException, InterruptedException {
+		if(input != null) {
+			consoleIn.write(input);
 	        consoleIn.newLine();
 		}
         consoleIn.flush();
-        Thread.sleep(1000); // Allow the game to respond
+        
+        // Allow the game to respond, give it 10 seconds
+        int count = 0;
+        while(!consoleOut.ready() && count < 100) {
+        	Thread.sleep(100);
+        	count++;
+        }
+        if(count == 100)
+        	throw new GameException("The game did not respond within 10 seconds.");
+        	
         List<String> allOutput = new ArrayList<String>();
         while (consoleOut.ready()) {
         	String line = consoleOut.readLine();
@@ -74,10 +98,6 @@ public class TestBase {
         }
         	
 		return parseOutput(allOutput);
-	}
-	
-	protected static Output enter(String input) throws IOException, InterruptedException {
-		return enter(input, false);
 	}
 
 	private static Output parseOutput(List<String> allOutput) {
@@ -156,6 +176,10 @@ public class TestBase {
 			furn.setFurniture(furnishing);
 		}
 		return furn;
+	}
+	
+	public static Output getInitialOutput() {
+		return initialOutput;
 	}
 
 }

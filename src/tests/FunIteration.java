@@ -8,24 +8,32 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 import data.Output;
-import data.TestBase;
+import data.Room;
 
-public class Tests extends TestBase {
+public class FunIteration extends TestBase {
 
 	@Test
-	public void test1() {
+	public void checkCommandL() {
 		scenario("The system should recognize every known command, like 'L'.");
 		given("The user has just started the game.");
 		then("The user enters 'N'.");
-		andThen("The user should be taken to the North room.");
+		andThen("The system should recognize the command.");
 		
         try {
-        	enter("N", true);
             Output output = enter("L", true);
             String message = output.getMessage();
             
-            if (!StringUtils.contains(message, "There might be something here..."))
-            	assertTrue(StringUtils.equals(message, "You don't see anything out of the ordinary.")); 	
+            boolean passed = false;
+            /*
+             * TODO So for here, is it best to assume that the game will stay the same,
+             * that the first room will always have something in it? Or would it better
+             * practice to check if the message contains something that says the room
+             * either had something or didn't have something in it?
+             */
+            if (StringUtils.contains(message, "There might be something here...")) 
+            		passed = true;
+            
+            assertTrue("The system did not recognize the 'L' command.", passed);
         
         } catch (IOException e) {
             e.printStackTrace();
@@ -37,20 +45,18 @@ public class Tests extends TestBase {
 	}
 	
 	@Test
-	public void test2() {
-		scenario("The system should recognize every known command, like 'L'.");
+	public void checkCommandN() {
+		scenario("The system should recognize every known command, like 'N'.");
 		given("The user has just started the game.");
 		then("The user enters 'N'.");
 		andThen("The user should be taken to the North room.");
 		
         try {
-        	enter("N", true);
-            Output output = enter("L", true);
-            String message = output.getMessage();
+            Output output = enter("N", true);
+            Room oldRoom = getInitialOutput().getRoom();
+            Room newRoom = output.getRoom();
             
-            if (!StringUtils.contains(message, "There might be something here..."))
-            	assertTrue(StringUtils.equals(message, "You don't see anything out of the ordinary.")); 	
-        
+            
         } catch (IOException e) {
             e.printStackTrace();
             fail("An error occured while trying to read the coffeemaker.jar file.");
