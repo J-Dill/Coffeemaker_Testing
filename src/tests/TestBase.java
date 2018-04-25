@@ -67,10 +67,14 @@ public class TestBase {
 			io = Runtime.getRuntime().exec("cmd /c java -jar " + dir);
 	    	consoleOut = new BufferedReader(new InputStreamReader(io.getInputStream()));
 	    	consoleIn = new BufferedWriter(new OutputStreamWriter(io.getOutputStream()));
-	    	initialOutput = enter(null, true); //This starts up the game and sends its initial output into the variable
+	    	initialOutput = enter(null); //This starts up the game and sends its initial output into the variable
 		} catch(IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
+    }
+    
+    protected static Output enter(String input) throws IOException, InterruptedException {
+    	return enter(input, false);
     }
 	
 	protected static Output enter(String input, boolean print) throws IOException, InterruptedException {
