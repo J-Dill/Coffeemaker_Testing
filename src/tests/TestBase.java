@@ -74,7 +74,7 @@ public class TestBase {
     }
     
     protected static Output enter(String input) throws IOException, InterruptedException {
-    	return enter(input, false);
+    	return enter(input, true);
     }
 	
 	protected static Output enter(String input, boolean print) throws IOException, InterruptedException {

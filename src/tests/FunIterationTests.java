@@ -30,8 +30,8 @@ public class FunIterationTests extends TestBase {
              * practice to check if the message contains something that says the room
              * either had something or didn't have something in it?
              */
-            if (StringUtils.contains(message, "There might be smething here...")) 
-            		passed = true;
+            if (StringUtils.contains(message, "There might be something here...")) 
+            	passed = true;
             
             assertTrue("The system did not recognize the 'L' command.", passed);
         
